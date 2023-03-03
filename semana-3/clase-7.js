@@ -43,15 +43,60 @@ const albumesFamosos = [
   },
 ];
 
+const nombreUsuario = document.getElementById("nombreUsuario");
+const covers = document.querySelector(".covers");
+
 /*                  [1] FUNCION: captar el nombre de usuario                  */
 
-function obtenerUsuario() {}
-obtenerUsuario();
+function obtenerUsuario() {
+  let usuario = "";
+
+  do {
+    usuario = prompt("Ingrese nombre:");
+  } while (
+    usuario === null ||
+    usuario === "" ||
+    usuario.length < 4 ||
+    !isNaN(usuario)
+  );
+
+  nombreUsuario.innerText = usuario.toUpperCase();
+}
+// obtenerUsuario();
 
 /*                [2] FUNCION: renderizar tarjetas del almbumes               */
 /* -------------------------------------------------------------------------- */
 //forEach, template strings, innerHTML
-function renderizarAlbumes(listado) {}
+function renderizarAlbumes(listado) {
+  listado.forEach((album) => {
+    // covers.innerHTML += `
+    //   <li data-id="${album.id}">
+    //     <img src="${album.imagen}" alt="${album.nombre}">
+    //     <p>${album.nombre}</p>
+    //     <i id="123sds" class="fa fa-heart ${
+    //       // album.like ? "favorito" : ""
+    //       // album.like && "favorito"  || ""
+    //       album.like && "favorito"
+    //     } "></i>
+    //   </li>
+    // `;
+    const li = document.createElement("li");
+    const img = document.createElement("img");
+    const p = document.createTextNode(album.nombre);
+    const i = document.createElement("i");
+
+    li.classList.add(album.id);
+    img.setAttribute("src", album.imagen);
+    img.setAttribute("alt", album.nombre);
+    img.setAttribute("alt", album.nombre);
+
+    li.appendChild(img);
+    li.appendChild(p);
+    li.appendChild(i);
+
+    covers.appendChild(li);
+  });
+}
 
 renderizarAlbumes(albumesFamosos);
 
