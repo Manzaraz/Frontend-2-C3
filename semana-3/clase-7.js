@@ -69,31 +69,43 @@ function obtenerUsuario() {
 //forEach, template strings, innerHTML
 function renderizarAlbumes(listado) {
   listado.forEach((album) => {
+    /* ------------------------- Modo Template Literals ------------------------- */
     // covers.innerHTML += `
     //   <li data-id="${album.id}">
     //     <img src="${album.imagen}" alt="${album.nombre}">
     //     <p>${album.nombre}</p>
     //     <i id="123sds" class="fa fa-heart ${
-    //       // album.like ? "favorito" : ""
-    //       // album.like && "favorito"  || ""
-    //       album.like && "favorito"
+    //       // (function () {
+    //       //   if (album.like) return "favorito";
+    //       // })() // pasando un if-else a través de una funcion autoinvocada como Callback
+    //       // album.like ? "favorito" : "" // Usando Operador Ternario
+    //       // album.like && "favorito"  || "" // Usando Operador de "cortocircuito" AND y OR
+    //       album.like && "favorito" // Usando sólamente el AND
     //     } "></i>
     //   </li>
     // `;
+
+    /* ------------------------- Modo Creación de Nodos ------------------------- */
+    // // Creo los nodos (li es el padre, los demás serán los child de li)
     const li = document.createElement("li");
     const img = document.createElement("img");
-    const p = document.createTextNode(album.nombre);
+    const p = document.createElement("p");
     const i = document.createElement("i");
 
+    // Cargo los Atributos a cada nodo
     li.classList.add(album.id);
     img.setAttribute("src", album.imagen);
     img.setAttribute("alt", album.nombre);
-    img.setAttribute("alt", album.nombre);
+    p.textContent = album.nombre;
 
+    // Agrego una clase usando setAttribute
+    i.setAttribute(
+      "class",
+      album.like ? "fa fa-heart favorito" : "fa fa-heart"
+    );
     li.appendChild(img);
     li.appendChild(p);
     li.appendChild(i);
-
     covers.appendChild(li);
   });
 }
@@ -111,7 +123,47 @@ renderizarAlbumes(albumesFamosos);
 // 2- contar la cantidad de favoritos y pintarlo en el span correspondiente
 // 3- tener en cuenta: usar las palabra en plural o en singular, según cuando
 // sea necesario ( es decir: 1 album, 1 favorito / 2 albumes, 3 favoritos )
-function mostrarDatosEnPerfil() {
+function mostrarDatosEnPerfil(arr) {
   // desarrollar la función 👇
+
+  /* ------------------------ Usando ForEach  (Por: Juan Pablo Bedoya Mesa 6)------------------------ */
+  const albums = document.querySelector("#cant-albums");
+  const favoritos = document.querySelector("#cant-favoritos");
+  let cantAlbums = arr.length;
+  let cantFavoritos = arr.filter((a) => a.like == true).length; // Una jugada maravillosa. Barrilete Cósmico⚽️
+  let albumsTxt = "";
+  let favoritosTxt = "";
+  cantAlbums == 1
+    ? (albumsTxt = "1 álbum")
+    : (albumsTxt = `${cantAlbums} álbumes`);
+  cantFavoritos == 1
+    ? (favoritosTxt = "1 favorito")
+    : (favoritosTxt = `${cantFavoritos} favoritos`);
+  albums.textContent = albumsTxt;
+  favoritos.textContent = favoritosTxt;
+
+  /* -------------------------- Usando el clásico for (Por: Cecilia) ------------------------- */
+  // const albumesUsuario = document.getElementById("cant-albums");
+  // const favoritosUsuario = document.getElementById("cant-favoritos");
+  // let contadorUsuario = 0;
+  // let contadorFavoritos = 0;
+
+  // for (let i = 0; i < albumesFamosos.length; i++) {
+  //   contadorUsuario++;
+  //   if (albumesFamosos[i].like) {
+  //     contadorFavoritos++;
+  //   }
+  // }
+
+  // No se olviden de "pintar" o "mostrar" en pantalla de manera dinámica según la cantidad de (aunque la palabra justa sería renderizar)
+  // albumesUsuario.textContent =
+  //   contadorUsuario < 2
+  //     ? `${contadorUsuario} album`
+  //     : `${contadorUsuario} albumes`;
+  // favoritosUsuario.textContent =
+  //   contadorFavoritos < 2
+  //     ? `${contadorFavoritos} album favorito`
+  //     : `${contadorFavoritos} albumes favoritos`;
 }
-mostrarDatosEnPerfil();
+
+mostrarDatosEnPerfil(albumesFamosos);
