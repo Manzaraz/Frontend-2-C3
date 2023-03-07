@@ -4,7 +4,31 @@
 // - buscar el album por id en el array
 // - cambiar el estado del like
 // - volver a renderizar
-function marcarFavorito() {}
+function marcarFavorito() {
+  // obtenemos un nodelist con la clase fa-hart
+  const botonesLike = document.querySelectorAll(".fa-heart");
+  //   console.log(botonesLike);
+
+  // recorrer el listado de botones ike
+  botonesLike.forEach((boton) => {
+    boton.addEventListener("click", function (e) {
+      //   console.log(e);
+      //   console.log(this.id);
+      console.log(boton.id);
+
+      // Recorrer el listado de albumesFamosos para verificar si la propiedad .id coincide con nuestro boton del evento
+      albumesFamosos.forEach((album) => {
+        // si encuentro el elemento que coincide, cambio la propiedad
+        if (album.id === boton.id) {
+          album.like = !album.like;
+          console.log(album);
+        }
+      });
+      renderizarAlbumes(albumesFamosos);
+      marcarFavorito();
+    });
+  });
+}
 
 marcarFavorito();
 
