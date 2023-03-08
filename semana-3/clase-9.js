@@ -18,31 +18,32 @@ const planesMensuales = [
 ];
 
 // Escuchamos el evento de 'carga' de la ventana 👇
-
-window.addEventListener("load", function () {
+window.addEventListener("load", () => {
   const footer = document.querySelector("footer");
-  //   console.log(footer);
+  console.log(footer);
 
-  // Creamos varialbes para usarlas dentro del bucle que genera el setInterval
+  // Crear variables para usarlas dentro del bucle que genera el carrusel a traves del setInterval()
   let total = planesMensuales.length;
   let contador = 0;
 
-  // Creo el intervalo y lo almaceno dentro de una variable
+  // Creo un intervalo y lo almaceno dentro de una variable
   const intervalo = setInterval(() => {
-    const posicion = contador % 3;
+    // genero un interador para calcular la posicion actual
+    const posicion = contador % total;
 
     console.log(contador);
-    console.log(`Posición: ${posicion}`);
+    console.log(`Posicion: ${posicion}`);
 
-    // Insertamos en el html un template literal
-    footer.innerHTML = `<p>Plan: <strong>${planesMensuales[posicion].tipo}</strong> $ ${planesMensuales[posicion].costo}</p><p>${planesMensuales[posicion].descripcion}<i class="removeAd">🅧</i></p>`;
+    // insertar en el HTML un template literal
+    footer.innerHTML = `<p>Plan: <strong>${planesMensuales[posicion].tipo}</strong> $${planesMensuales[posicion].costo}</p><p>${planesMensuales[posicion].descripcion}</p>`;
 
     contador++;
   }, 3000);
 
+  // Añadir un listener del  dobleClick , en el footer para frenar el intervalo.
   footer.addEventListener("click", function () {
     clearInterval(intervalo);
-    console.log("👉🏼 Frenamos el intervalos");
+    console.log("🛑 Frenamos el intervalo 🏆");
   });
 });
 

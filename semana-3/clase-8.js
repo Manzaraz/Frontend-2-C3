@@ -55,14 +55,14 @@ function eliminarAlbum() {
   // 💡 Es siempre buena práctica trabajar los eventos sobre una constante capturada, por eso asigno el evento al body
   const body = document.querySelector("body");
 
-  body.addEventListener("keydown", (e) => {
+  body.addEventListener("keydown", function (e) {
     // console.log(e); // consulto el evento
     console.log(e.code); // la propiedad "code" me permite consultar sin distinguir entre mayúsculas o minúsculas
     if (e.code == "KeyF") {
       let albumAEliminar = prompt(
         "Ingresa el nombre del álbum que quieres borrar"
       ).toLowerCase();
-      //   console.log(albumAEliminar);
+      console.log(albumAEliminar);
 
       const indexObjetivo = albumesFamosos.findIndex(
         (album) => album.nombre.toLowerCase() == albumAEliminar
@@ -73,7 +73,7 @@ function eliminarAlbum() {
       // Si encuentro el parámetro me va a devolver un index, caso contrario me devuelve -1. Por eso pregunto si el indexObjetivo == -1 en el caso que no lo haya encontrado
       indexObjetivo == -1
         ? alert("Álbum no encontrado")
-        : albumesFamosos.splice(indexObjetivo, 1); // El método splice me elimina el index y en el segundo parámetro especifico cuantos elementos elimino despues de ese index 👉🏼 https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_splice2
+        : albumesFamosos.splice(indexObjetivo, 3); // El método splice me elimina el index y en el segundo parámetro especifico cuantos elementos elimino despues de ese index 👉🏼 https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_splice2
     }
     renderizarAlbumes(albumesFamosos);
   });
