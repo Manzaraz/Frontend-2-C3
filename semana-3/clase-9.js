@@ -57,3 +57,24 @@ window.addEventListener("load", () => {
 // 3- Si el usuario cancela debemos agregar un parrafo dentro del div '#perfil'(sin eliminar nada dentro)
 // 4- El parrafo agregado debe ser de color verde y decir: "Usuario oficial de Spotifront"
 // 5- Por ultimo, si ese parrafo es clickeado, debe mostrar una alerta al usuario que diga: "Gracias por confiar en nosotros."
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    // Aquí el evento load estaba sin comillas
+    const escuchar = (() => confirm("¿Deseas conocer más música?"))();
+
+    if (escuchar) {
+      window.open("https://open.spotify.com", "_blank");
+    } else {
+      let parrafoPerfil = document.querySelector(".perfil");
+      parrafoPerfil.innerHTML += `
+      <p style="color: green;" id="parrafoPerfil" > Usuario Oficial de Spotyfront </p>
+      `;
+      const click = document.getElementById("parrafoPerfil");
+      console.log(click);
+      click.addEventListener("click", () =>
+        alert("Gracias por confiar en nosotros")
+      );
+    }
+  }, 3000);
+});

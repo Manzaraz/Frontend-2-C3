@@ -64,16 +64,20 @@ function eliminarAlbum() {
       ).toLowerCase();
       console.log(albumAEliminar);
 
-      const indexObjetivo = albumesFamosos.findIndex(
-        (album) => album.nombre.toLowerCase() == albumAEliminar
-      ); //   uso el método findIndex para encontrar el indice del objetivo a eliminar. del mismo modo que un filter() 👉🏼 https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+      // const indexObjetivo = albumesFamosos.findIndex(
+      //   (album) => album.nombre.toLowerCase() == albumAEliminar
+      // ); //   uso el método findIndex para encontrar el indice del objetivo a eliminar. del mismo modo que un filter() 👉🏼 https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+      const filtroNombre = function (album) {
+        return album.nombre.toLowerCase() == albumAEliminar;
+      };
+      const indexObjetivo = albumesFamosos.findIndex(filtroNombre(album)); //   uso el método findIndex para encontrar el indice del objetivo a eliminar. del mismo modo que un filter() 👉🏼 https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
 
       console.log(indexObjetivo); // observo que si encuentro el index me devuelve el numero correspondiente, sino me devuelve -1
 
       // Si encuentro el parámetro me va a devolver un index, caso contrario me devuelve -1. Por eso pregunto si el indexObjetivo == -1 en el caso que no lo haya encontrado
       indexObjetivo == -1
         ? alert("Álbum no encontrado")
-        : albumesFamosos.splice(indexObjetivo, 3); // El método splice me elimina el index y en el segundo parámetro especifico cuantos elementos elimino despues de ese index 👉🏼 https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_splice2
+        : albumesFamosos.splice(indexObjetivo, 2); // El método splice me elimina el index y en el segundo parámetro especifico cuantos elementos elimino despues de ese index 👉🏼 https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_splice2
     }
     renderizarAlbumes(albumesFamosos);
   });
