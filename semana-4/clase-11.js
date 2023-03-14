@@ -3,7 +3,7 @@
 /* -------------------------------------------------------------------------- */
 function capturarDatosFormulario() {
   // 👇 establecemos un objeto vacío para despues rellenarlo
-  const objetoInformacion = {
+  const obejetoInformacion = {
     nombre: "",
     password: "",
     telefono: "",
@@ -12,34 +12,32 @@ function capturarDatosFormulario() {
   };
 
   // capturamos todos los nodos
-  const nom = document.getElementById("nom");
+  const nom = document.querySelector("#nom");
   const pass = document.querySelector("#pass");
   const tel = document.querySelector("#tel");
   const hobbies = document.querySelectorAll("[name=hobbies]");
   const nacionalidad = document.querySelectorAll("[name=nacionalidad]");
-  // const nacionalidad = document.querySelectorAll("[type=radio]");
-  console.log(hobbies);
 
   // 👇 rellenamos el objeto con la info correspondiente
-  objetoInformacion.nombre = nom.value;
-  objetoInformacion.password = pass.value;
-  objetoInformacion.telefono = tel.value;
+  obejetoInformacion.nombre = nom.value;
+  obejetoInformacion.password = pass.value;
+  obejetoInformacion.telefono = tel.value;
   // recorremos los checkbox
   hobbies.forEach((hobbie) => {
-    // Para cada hobbie seleccionado lo sumamos al array de hobbies
+    // cada hobbie seleccionado lo sumamos al listado
     if (hobbie.checked) {
-      objetoInformacion.hobbies.push(hobbie.id);
+      obejetoInformacion.hobbies.push(hobbie.id);
     }
   });
-  // recorremos los nacionalidad
+  // recorremos los radio
   nacionalidad.forEach((nacion) => {
-    // Para cada hobbie seleccionado lo sumamos al array de hobbies
+    // la nacionalidad seleccionada es la que se guarda en el objeto
     if (nacion.checked) {
-      objetoInformacion.nacionalidad = nacion.id;
+      obejetoInformacion.nacionalidad = nacion.id;
     }
   });
 
-  return objetoInformacion;
+  return obejetoInformacion;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -55,7 +53,7 @@ form.addEventListener("submit", function (evento) {
   const datos = capturarDatosFormulario();
   console.log(datos);
 
-  const errores = validarInformacion();
+  const errores = validarInformacion(datos);
   console.log(errores);
 
   // mostramos los errores presentes
@@ -64,7 +62,7 @@ form.addEventListener("submit", function (evento) {
   // mostramos mensaje de exito si no hay errores
   mostrarMensajeExito(errores);
 
-  form.reset();
+  // form.reset()
 });
 
 /* ----------------------------- MESA DE TRABAJO ---------------------------- */
@@ -84,7 +82,31 @@ function validarInformacion(usuario) {
   let errores = [];
   // 👇 desarrollar aqui la funcion
 
+  // Normalizo los datos de nuestro array con el .trim()
+  usuario.nombre = usuario.nombre.trim();
+  usuario.password = usuario.password.trim();
+  usuario.telefono = usuario.telefono.trim();
+  console.log(usuario);
+
+  /** Créditos Rama de la mesa 3 */
+  //Validamos los datos de usuarioque nos vienen por parámetro
+  if (usuario.nombre.length < 3 || typeof usuario.nombre !== "string") {
+    errores.push("El nombre debe tener al menos 3 caracteres.");
+  }
+  if (usuario.password.trim().length < 6) {
+    errores.push(
+      "La contraseña debe tener al menos 6 caracteres, entre letras y símbolos."
+    );
+  }
+  if (usuario.telefono.length < 10) {
+    errores.push("No es un teléfono válido.");
+  }
+  if (usuario.hobbies.length > 4) {
+    errores.push("Sólo es posible seleccionar 4 hobbies.");
+  }
+  if (usuario.nacionalidad === "") {
+    errores.push("Debe seleccionar una nacionalidad.");
+  }
+
   return errores;
 }
-
-// * Para la mesa trim() cortar  espacios, split(“ “),  includes("@") y regular expressions includes()
