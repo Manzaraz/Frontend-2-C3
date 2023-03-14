@@ -1,14 +1,71 @@
 /* -------------------------------------------------------------------------- */
 /*               [1] FUNCION: capturar los datos del formulario               */
 /* -------------------------------------------------------------------------- */
-function capturarDatosFormulario() {}
+function capturarDatosFormulario() {
+  // 👇 establecemos un objeto vacío para despues rellenarlo
+  const objetoInformacion = {
+    nombre: "",
+    password: "",
+    telefono: "",
+    hobbies: [],
+    nacionalidad: "",
+  };
+
+  // capturamos todos los nodos
+  const nom = document.getElementById("nom");
+  const pass = document.querySelector("#pass");
+  const tel = document.querySelector("#tel");
+  const hobbies = document.querySelectorAll("[name=hobbies]");
+  const nacionalidad = document.querySelectorAll("[name=nacionalidad]");
+  // const nacionalidad = document.querySelectorAll("[type=radio]");
+  console.log(hobbies);
+
+  // 👇 rellenamos el objeto con la info correspondiente
+  objetoInformacion.nombre = nom.value;
+  objetoInformacion.password = pass.value;
+  objetoInformacion.telefono = tel.value;
+  // recorremos los checkbox
+  hobbies.forEach((hobbie) => {
+    // Para cada hobbie seleccionado lo sumamos al array de hobbies
+    if (hobbie.checked) {
+      objetoInformacion.hobbies.push(hobbie.id);
+    }
+  });
+  // recorremos los nacionalidad
+  nacionalidad.forEach((nacion) => {
+    // Para cada hobbie seleccionado lo sumamos al array de hobbies
+    if (nacion.checked) {
+      objetoInformacion.nacionalidad = nacion.id;
+    }
+  });
+
+  return objetoInformacion;
+}
 
 /* -------------------------------------------------------------------------- */
 /*                 [2] FUNCION: escuchamos el submit del form                 */
 /* -------------------------------------------------------------------------- */
 const form = document.querySelector("form");
 
-form.addEventListener("submit", function (evento) {});
+form.addEventListener("submit", function (evento) {
+  // prevenimos el default para que no se intente enviar
+  evento.preventDefault();
+
+  // utilizamos nuestra funcion para capturar los datos
+  const datos = capturarDatosFormulario();
+  console.log(datos);
+
+  const errores = validarInformacion();
+  console.log(errores);
+
+  // mostramos los errores presentes
+  renderizarErrores(errores);
+
+  // mostramos mensaje de exito si no hay errores
+  mostrarMensajeExito(errores);
+
+  form.reset();
+});
 
 /* ----------------------------- MESA DE TRABAJO ---------------------------- */
 /* -------------------------------------------------------------------------- */
