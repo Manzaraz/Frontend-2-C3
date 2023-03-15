@@ -2,7 +2,6 @@
 /*               [1] FUNCION: capturar los datos del formulario               */
 /* -------------------------------------------------------------------------- */
 function capturarDatosFormulario() {
-  // 👇 establecemos un objeto vacío para despues rellenarlo
   const obejetoInformacion = {
     nombre: "",
     password: "",
@@ -10,6 +9,7 @@ function capturarDatosFormulario() {
     hobbies: [],
     nacionalidad: "",
   };
+  // 👇 establecemos un objeto vacío para despues rellenarlo
 
   // capturamos todos los nodos
   const nom = document.querySelector("#nom");
@@ -83,6 +83,7 @@ function validarInformacion(usuario) {
   // 👇 desarrollar aqui la funcion
 
   // Normalizo los datos de nuestro array con el .trim()
+  // let { nombre, password, telefono, hobbies, nacionalidad } = usuario
   usuario.nombre = usuario.nombre.trim();
   usuario.password = usuario.password.trim();
   usuario.telefono = usuario.telefono.trim();

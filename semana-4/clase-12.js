@@ -1,7 +1,25 @@
 /*                        [4] FUNCION: renderizar errores                      */
 
 // Desarrollamos esta funcion para llamarla en el submit
-function renderizarErrores(listado) {}
+function renderizarErrores(listado) {
+  const cajaErrores = document.querySelector("#errores");
+  console.log(cajaErrores);
+  if (cajaErrores) {
+    cajaErrores.remove();
+  }
+
+  if (listado.length > 0) {
+    // const divTemplate = document.createElement("div");
+    const divTemplate = document.createElement("fieldset");
+    divTemplate.setAttribute("id", "errores");
+    divTemplate.style =
+      "background: rgba(255, 0, 0, 0.2); padding: .5em 1em; color: red; margin: 0.5em 0; ";
+    listado.forEach((error) => {
+      divTemplate.innerHTML += `<p><small>${error}</small></p>  `;
+    });
+    form.appendChild(divTemplate);
+  }
+}
 
 /* ----------------------------- MESA DE TRABAJO ---------------------------- */
 /* -------------------------------------------------------------------------- */
