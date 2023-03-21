@@ -138,8 +138,8 @@ formulario.addEventListener("submit", function (evento) {
   // prevenimos el default para manejar nososotro el comportamiento
   evento.preventDefault();
 
-  console.log(estadoUsuario);
-  console.log(estadoErroresOK);
+  // console.log(estadoUsuario);
+  // console.log(estadoErroresOK);
 
   if (
     estadoErroresOK.email &&
@@ -171,6 +171,8 @@ function navegarPaginaExito() {
   btn.innerText = "Cargando..." 
 
   // almaceno en Local storage
+  const dataAEnviar =  JSON.stringify(estadoUsuario)
+  localStorage.setItem("datosUsuario", dataAEnviar)
 
   
   setTimeout(() => { 

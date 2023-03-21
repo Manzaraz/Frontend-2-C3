@@ -8,18 +8,40 @@
 /* -------------------------------------------------------------------------- */
 window.addEventListener("load", function () {
   // 👇 Todo lo que desarrollamos dentro, se ejecuta una vez que se carga la página
+  const user = recuperarDataStorage()
+
+  renderizarElementos(user)
 });
 
 /* -------------------------------------------------------------------------- */
 /*                 [7] FUNCION: Recuperar la info del storage                 */
 /* -------------------------------------------------------------------------- */
-function recuperarDataStorage() {}
+function recuperarDataStorage() {
+  const datosEnJSON = localStorage.getItem("datosUsuario")
+  //  console.log(datosEnJSON);
+
+   const datosParseados = JSON.parse(datosEnJSON)
+  //  console.log(datosParseados);
+
+  // const data = JSON.parse(localStorage.getItem("datosUsuario"))
+
+   return datosParseados
+  //  return data
+
+}
 
 /* -------------------------------------------------------------------------- */
 /*                [8] FUNCION: Renderizamos la info en pantalla               */
 /* -------------------------------------------------------------------------- */
 function renderizarElementos(objeto) {
+  console.log(objeto);
   // capturamos los nodos
+  const email = document.querySelector("#email")
+  const perfil = document.getElementById("perfil")
+
+  //  Pintar las propiedades del objeto en pantalla
+  email.innerText= objeto.email
+  perfil.textContent = objeto.rol
 }
 
 /* ----------------------------- MESA DE TRABAJO ---------------------------- */
