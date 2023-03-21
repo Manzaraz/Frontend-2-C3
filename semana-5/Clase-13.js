@@ -147,8 +147,9 @@ formulario.addEventListener("submit", function (evento) {
     estadoErroresOK.rol &&
     estadoErroresOK.terminos
   ) {
-    alert("Pasó todas las validaciones!");
+    // alert("Pasó todas las validaciones!");
     // ☝ luego reemplazar esto por la funcion de éxito
+    navegarPaginaExito()
   }
 });
 
@@ -164,5 +165,15 @@ formulario.addEventListener("submit", function (evento) {
 // 4 - Cuando vaya a la página de 'usuario.html' NO se debe permitir que mediante el botón de "Atrás"(la flechita del navegador) el usuario vuelva a index.
 
 function navegarPaginaExito() {
-  //   desarrollar la funcion aqui
-}
+  // desarrollar la funcion aqui 
+  const btn = document.querySelector('button'); 
+  btn.setAttribute('disabled', true); 
+  btn.innerText = "Cargando..." 
+
+  // almaceno en Local storage
+
+  
+  setTimeout(() => { 
+    location.replace('./usuario.html') 
+  }, 3000); 
+} 
