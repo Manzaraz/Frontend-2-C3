@@ -1,3 +1,4 @@
+// chequearUsuarioValido()
 // Vamos a trabajar pasando información al Storage.
 // De esta manera vamos a poder consumir en un html algo que haya guardado otro.
 // 👉 Para eso debemos agregar al principio de la función [5] en script 'Clase-13' la siguiente línea:
@@ -42,6 +43,7 @@ function renderizarElementos(objeto) {
   //  Pintar las propiedades del objeto en pantalla
   email.innerText= objeto.email
   perfil.textContent = objeto.rol
+  botonCerrarSesion()
 }
 
 /* ----------------------------- MESA DE TRABAJO ---------------------------- */
@@ -65,6 +67,22 @@ function renderizarElementos(objeto) {
 // 6- Mediante el click debe aparecer un cuadro de confirmación que pregunte: "¿Seguro desea cerrar sesión?"
 // 7- Si el usuario acepta debe borrar todo el storage y redirigirlo a la pantalla de Login.
 
+
 function botonCerrarSesion() {
   //    👇 desarrollar la función
+
+  const btn = document.createElement("button");
+  btn.textContent= "cerrar sesion";
+  btn.style ="background: rgba(255,0,0,0.2); padding: 5px 20px; color: red; margin: 20px; border: none; cursor: pointer";
+  const div = document.querySelector(".user");
+  div.appendChild(btn);
+
+  btn.addEventListener("click", function(){
+    const resultado = confirm("seguro desea cerrar sesion?")
+    if(resultado){
+      localStorage.removeItem("datosUsuario")
+      location.replace('./index.html') 
+    }
+  })
+  
 }

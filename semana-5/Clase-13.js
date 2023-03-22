@@ -15,7 +15,7 @@ const estadoErroresOK = {
 };
 
 /* ---------------------------------- nodos --------------------------------- */
-
+// function chequearUsuarioValido() 
 // capturamos todos los elementos que necesitamos
 const formulario = document.forms[0];
 
