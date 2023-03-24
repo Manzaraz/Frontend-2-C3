@@ -11,17 +11,7 @@
 
 function consultaApi(endpoint) {
 
-    fetch(endpoint)
-        .then(objetoRespuesta => {
-            console.log(objetoRespuesta);
-            const promesaJson = objetoRespuesta.json();
-            return promesaJson;
-        })
-        .then(datosJs => {
-            console.log(datosJs);
-            renderizarElementos(datosJs);
-        })
-
+    
 }
 
 /* -------------------------------------------------------------------------- */
@@ -33,9 +23,7 @@ const boton = document.querySelector('button');
 const endpoint = 'https://jsonplaceholder.typicode.com/comments';
 
 boton.addEventListener('click', function () {
-    console.log("Clink para ver comentarios...");
 
-    consultaApi(endpoint);
 
 
 })
@@ -47,15 +35,7 @@ boton.addEventListener('click', function () {
 // el .map() y .join() para obtener el resultado esperado.
 
 function renderizarElementos(listado) {
-    const comentarios = document.querySelector('.comentarios');
 
-    comentarios.innerHTML = listado.map(item => {
-        return `<div class="comentario">
-                    <h4>${item.email}</h4>
-                    <p>${item.body}</p>
-                </div>`
-    }).join('');
-}
 
 /* ----------------------------- Mesa de trabajo ---------------------------- */
 /* -------------------------------------------------------------------------- */
