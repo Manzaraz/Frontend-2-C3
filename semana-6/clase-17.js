@@ -10,6 +10,19 @@
 // Vamos a implementar el endpoint que nos devuelve comentarios para mostrarlos en pantalla.
 
 function consultaApi(endpoint) {
+    fetch(endpoint)
+        .then( objetoRespuesta => {
+            // console.log(objetoRespuesta);
+            // JSON.parse(objetoRespuesta)
+            const promesaJson = objetoRespuesta.json()
+            return promesaJson
+        })
+        .then(promesaJson => {
+            console.log(datoJs);
+            renderizarElementos(promesaJson)
+
+        })
+
 
     
 }
@@ -23,8 +36,9 @@ const boton = document.querySelector('button');
 const endpoint = 'https://jsonplaceholder.typicode.com/comments';
 
 boton.addEventListener('click', function () {
+    console.log("Click para ver comentarios");
 
-
+    consultaApi(endpoint)
 
 })
 
@@ -35,8 +49,18 @@ boton.addEventListener('click', function () {
 // el .map() y .join() para obtener el resultado esperado.
 
 function renderizarElementos(listado) {
+    console.log(listado);
+    const comentarios = document.querySelector(".comentarios")
+
+    comentarios.innerHTML = listado.map( elemento => {
+        return ` <div class="comentario">
+                <h4> ${elemento.email} </h4>
+                <p> ${elemento.body} </p>
+            </div>`
+    }).join("")
 
 
+}
 /* ----------------------------- Mesa de trabajo ---------------------------- */
 /* -------------------------------------------------------------------------- */
 /*                              Mejoras de código                             */

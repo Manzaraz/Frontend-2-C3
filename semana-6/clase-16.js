@@ -75,6 +75,16 @@ let listadoComentarios = [{
 /* -------------------------------------------------------------------------- */
 /*                      [1] FUNCION: Escuchamos el click                      */
 /* -------------------------------------------------------------------------- */
+const boton = document.querySelector("button")
+
+boton.addEventListener("click", (e) => { 
+    console.log("Click para ver comentarios");
+
+
+    consultaAsincrona("endpoint").then( respuesta => { // esto vendria a ser un fetch
+        console.log(respuesta);
+    })
+ })
 
 
 /* -------------------------------------------------------------------------- */
@@ -82,6 +92,25 @@ let listadoComentarios = [{
 /* -------------------------------------------------------------------------- */
 // Creamos una funcion que retorna una promesa despues de 2,5 segundos.
 // La idea es simular la demora de tiempo en responder de un servidor.
+function consultaAsincrona(texto) {
+    return new Promise((resolve, reject) => { 
+        
+        setTimeout(() => {
+            // chequeamos que el texto sea el correcto
+            // esto simula lo que a futuro vamos a hacer con fetch()
+            if (texto === "endpoint") {
+                // si todo esta bien, devolvemos el listado
+                resolve(listadoComentarios)
+            } else {
+                // otra posiblidad cuando la promesa rsea rechazada
+                reject({
+                    mensaje: "Consulta rechazad"
+                })
+            }
+        }, 2500);
+     })
+}
+
 
 
 /* ----------------------------- Mesa de trabajo ---------------------------- */
