@@ -89,4 +89,4 @@ function renderizarRespuesta(datos) {
 // Este proceso puede realizarse a través de la herramienta Postman, o si ya lo prefieren desde un script.
 // Documentación: https://todo-api.ctd.academy/#/tasks/createTask
 // url: https://todo-api.ctd.academy/v1/
-// Path para crear usuario users
+// Path para crear usuario: users
