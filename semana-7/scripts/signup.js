@@ -1,37 +1,43 @@
 window.addEventListener('load', function () {
     /* ---------------------- obtenemos variables globales ---------------------- */
-    const form = document.forms[0];
-    const nombre = document.querySelector('#inputNombre');
-    const apellido = document.querySelector('#inputApellido');
-    const email = document.querySelector('#inputEmail');
-    const password = document.querySelector('#inputPassword');
-    const url = 'https://ctd-todo-api.herokuapp.com/v1';
+    const form = document.forms[0]
+    const inputNombre = document.querySelector("#inputNombre")
+    const inputApellido = document.querySelector("#inputApellido")
+    const inputEmail = document.querySelector("#inputEmail")
+    const inputPassword = document.querySelector("#inputPassword")
+    const inputPasswordRepetida = document.querySelector("#inputPasswordRepetida")
+    const URL = "https://todo-api.ctd.academy/v1"
+    const path = "/users"   
+    const URI = URL + path 
 
     /* -------------------------------------------------------------------------- */
     /*            FUNCIÓN 1: Escuchamos el submit y preparamos el envío           */
     /* -------------------------------------------------------------------------- */
     form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        //creamos el cuerpo de la request
-        const payload = {
-            firstName: nombre.value,
-            lastName: apellido.value, 
-            email: email.value,
-            password: password.value
-        };
-        //configuramos la request del Fetch
-        const settings = {
-            method: 'POST',
-            body: JSON.stringify(payload),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        };
-        //lanzamos la consulta de login a la API
-        realizarRegister(settings);
+      event.preventDefault()
+    //   if (inputPassword !== inputPasswordRepetida) {
+    //     return {msg: "Las contraseñas nos coinciden"}
+    //   }
+    //   Creamos el cuerpo de la request
+    const payload = {
+        firstName: inputNombre.value,
+        lastName: inputApellido.value,
+        email: inputEmail.value,
+        password: inputPassword.value
+    }
+    // Configuramos la request del fetch
+     const settings = {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify(payload)
+    }
+    // Lanzamos la consulta de loguin a la API
+    realizarRegister(settings)
 
-        //limpio los campos del formulario
-        form.reset();
+    // Limpio los campos del formulario
+    form.reset();
     });
 
     /* -------------------------------------------------------------------------- */
@@ -39,34 +45,19 @@ window.addEventListener('load', function () {
     /* -------------------------------------------------------------------------- */
     function realizarRegister(settings) {
         console.log("Lanzando la consulta a la API");
-        fetch(`${url}/users`, settings)
+        fetch(URI, settings)
             .then(response => {
-                console.log(response);
-
-                if (response.ok != true) {
-                    alert("Alguno de los datos es incorrecto.")
+                // console.log(response);
+                return response.json()
+            }) // response me devuelve el jwt
+            .then( resJSON => {
+                console.log(resJSON)
+                // console.log(responseJSON);
+                if (resJSON.jwt) {
+                    localStorage.setItem("jwt", resJSON.jwt) // guardo mi token en el localStorage
+                    location.replace("mis-tareas.html") // veo si logeo y me redirije a nuestro tablero
                 }
-
-                return response.json();
-
             })
-            .then(data => {
-                console.log("Promesa cumplida:");
-                console.log(data);
-
-                if (data.jwt) {
-                    //guardo en LocalStorage el objeto con el token
-                    localStorage.setItem('jwt', JSON.stringify(data.jwt));
-
-                    //redireccionamos a la página
-                    location.replace('./mis-tareas.html');
-                }
-                
-            }).catch(err => {
-                console.log("Promesa rechazada:");
-                console.log(err);
-            })
+            .catch(err => console.log(err))
     };
-
-
 });
