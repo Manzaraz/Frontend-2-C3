@@ -163,7 +163,6 @@ window.addEventListener('load', function () {
         `
       }
       numeroFinalizados.innerHTML = contador
-
     })
   };
 
@@ -171,10 +170,45 @@ window.addEventListener('load', function () {
   /*                  FUNCIÓN 6 - Cambiar estado de tarea [PUT]                 */
   /* -------------------------------------------------------------------------- */
   function botonesCambioEstado() {
-    
-    
+    const btnCambioEstado = document.querySelectorAll(".change")
 
+    btnCambioEstado.forEach( boton => {
+      // Asignar a cada botón un listener para poder capturar el id de la tarea a la cual clickeo
+      boton.addEventListener("click", (event) => { 
+        console.log("Cambiar erstado de la tarea... ");
+        console.log(event.target);
+        console.log(event.target.id);
+        const id = event.target.id
+        const uriTareaId = `${uriTareas}/${id}`
+        const payload = {}
 
+        
+        if (event.target.classList.contains("incompleta")) {
+          console.log("tiene la clase");
+          //  Si está completado, lo paso a pendiente 
+          payload.completed = false
+        } else {
+          console.log("NO tiene la clase");
+          // caso contrario, la tarea está pendiente, y la paso a completa
+          payload.completed = true
+        }
+        const settings = {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            authorization: token
+          },
+          body: JSON.stringify(payload)
+        }
+  
+        fetch( uriTareaId, settings )
+          .then( response => {
+            console.log(response.status);
+            consultarTareas()
+          })
+          .catch( err => console.log(err))
+       })
+    })
 
   }
 
