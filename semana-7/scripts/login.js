@@ -4,17 +4,26 @@ window.addEventListener('load', function () {
     const inputEmail = document.querySelector("#inputEmail")
     const inputPassword = document.querySelector("#inputPassword")
 
+      // Aquí en este punto yo me encargo de mandar a llamar las funciones de normalizar texto y validaciónes
+
+      inputEmail.addEventListener("blur", e => isEmpty(`⚠️ Se requiere que ingrese su ${inputEmail.name}`, e))
+      inputPassword.addEventListener("blur",  e => isEmpty(`⚠️ Se requiere que ingrese su ${inputPassword.name}`, e))
+
+      inputEmail.addEventListener("input", validarEmail)
+      inputPassword.addEventListener("input", validarContrasenia)
+
+
     /* -------------------------------------------------------------------------- */
     /*            FUNCIÓN 1: Escuchamos el submit y preparael envío           */
     // /* -------------------------------------------------------------------------- */
     form.addEventListener("submit", (ev) => { 
         ev.preventDefault()
-        // console.log("Preparando datos");
+        console.log("Preparando datos");
         const datos = {
-            email: inputEmail.value,
-            password: inputPassword.value 
+            email: normalizarEmail(inputEmail.value),
+            password: normalizarTexto(inputPassword.value )
         }
-        // console.log(datos);
+        console.log(datos);
         realizarLogin( datos )
      }) 
 
