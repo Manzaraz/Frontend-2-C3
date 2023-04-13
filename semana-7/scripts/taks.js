@@ -7,29 +7,29 @@ if (!localStorage.jwt) {
 window.addEventListener('load', function () {
 
   /* ---------------- variables globales y llamado a funciones ---------------- */
-    const URL = "https://todo-api.ctd.academy/v1"
-    const uriUsuarios = URL + "/users/getMe"   
-    const uriTareas =  URL +  "/tasks"   
-    const token = localStorage.jwt
+  const URL = "https://todo-api.ctd.academy/v1"
+  const uriUsuarios = URL + "/users/getMe"
+  const uriTareas = URL + "/tasks"
+  const token = localStorage.jwt
 
-    // creo los selectores 
-    const btnCerrarSesion = document.querySelector("#closeApp")
-    const formCrearTarea = document.querySelector(".nueva-tarea")
-    const nuevaTarea = document.querySelector("#nuevaTarea")
+  // creo los selectores 
+  const btnCerrarSesion = document.querySelector("#closeApp")
+  const formCrearTarea = document.querySelector(".nueva-tarea")
+  const nuevaTarea = document.querySelector("#nuevaTarea")
 
-    obtenerNombreUsuario()
-    consultarTareas()
+  obtenerNombreUsuario()
+  consultarTareas()
   /* -------------------------------------------------------------------------- */
   /*                          FUNCIÓN 1 - Cerrar sesión                         */
   /* -------------------------------------------------------------------------- */
 
   btnCerrarSesion.addEventListener('click', function () {
-   const cerrarSesion = confirm("¿Está seguro de que desea cerrar sesión?")
+    const cerrarSesion = confirm("¿Está seguro de que desea cerrar sesión?")
 
-   if (cerrarSesion) {
-    localStorage.clear()
-    location.replace("./index.html")
-   }
+    if (cerrarSesion) {
+      localStorage.clear()
+      location.replace("./index.html")
+    }
   });
 
   /* -------------------------------------------------------------------------- */
@@ -37,7 +37,7 @@ window.addEventListener('load', function () {
   /* -------------------------------------------------------------------------- */
 
   function obtenerNombreUsuario() {
-   
+
     const settings = {
       method: "GET",
       headers: {
@@ -45,15 +45,15 @@ window.addEventListener('load', function () {
       }
     }
 
-    fetch( uriUsuarios , settings )
-      .then( response => response.json() )
-      .then( data => {
+    fetch(uriUsuarios, settings)
+      .then(response => response.json())
+      .then(data => {
         console.log("Consultando datos del usuario... ");
         console.log(data);
         const nombreUsuario = document.querySelector(".user-info p")
-         nombreUsuario.innerText =  data.firstName
+        nombreUsuario.innerText = data.firstName
       })
-      .catch( err => console.log(err) )    
+      .catch(err => console.log(err))
   };
 
 
@@ -69,17 +69,17 @@ window.addEventListener('load', function () {
       }
     }
     console.log("Consultando mis tareas ... ")
-    fetch( uriTareas, settings )
-    .then(response => response.json())
-    .then( tareas => {
-      console.log("Tareas del usuario: ... ");
-      console.log(tareas);
+    fetch(uriTareas, settings)
+      .then(response => response.json())
+      .then(tareas => {
+        console.log("Tareas del usuario: ... ");
+        console.log(tareas);
 
-      renderizarTareas(tareas)
-      botonesCambioEstado()
-      botonBorrarTarea()
-    })
-    .catch( err => console.log(err))
+        renderizarTareas(tareas)
+        botonesCambioEstado()
+        botonBorrarTarea()
+      })
+      .catch(err => console.log(err))
   };
 
 
@@ -93,7 +93,7 @@ window.addEventListener('load', function () {
     console.log(nuevaTarea.value);
 
     const payload = {
-      description:  nuevaTarea.value,
+      description: nuevaTarea.value,
     }
     const settings = {
       method: "POST",
@@ -105,14 +105,14 @@ window.addEventListener('load', function () {
     }
 
 
-    fetch( uriTareas, settings)
+    fetch(uriTareas, settings)
       .then(res => res.json())
-      .then( tarea => {
+      .then(tarea => {
         console.log("Consultando tareas del usuario...");
         console.log(tarea);
         consultarTareas()
-      } )
-      .catch( err => console.log(err))
+      })
+      .catch(err => console.log(err))
   });
 
 
@@ -131,9 +131,9 @@ window.addEventListener('load', function () {
     let contador = 0
     numeroFinalizados.innerHTML = contador
 
-    listado.forEach( tarea => {
+    listado.forEach(tarea => {
       // Creamos una tarea intermedia para analizar la fecha
-      let fecha = new Date (tarea.createdAt)
+      let fecha = new Date(tarea.createdAt)
 
       if (tarea.completed) {
         contador++
@@ -172,9 +172,9 @@ window.addEventListener('load', function () {
   function botonesCambioEstado() {
     const btnCambioEstado = document.querySelectorAll(".change")
 
-    btnCambioEstado.forEach( boton => {
+    btnCambioEstado.forEach(boton => {
       // Asignar a cada botón un listener para poder capturar el id de la tarea a la cual clickeo
-      boton.addEventListener("click", (event) => { 
+      boton.addEventListener("click", (event) => {
         console.log("Cambiar erstado de la tarea... ");
         console.log(event.target);
         console.log(event.target.id);
@@ -182,7 +182,7 @@ window.addEventListener('load', function () {
         const uriTareaId = `${uriTareas}/${id}`
         const payload = {}
 
-        
+
         if (event.target.classList.contains("incompleta")) {
           console.log("tiene la clase");
           //  Si está completado, lo paso a pendiente 
@@ -200,14 +200,14 @@ window.addEventListener('load', function () {
           },
           body: JSON.stringify(payload)
         }
-  
-        fetch( uriTareaId, settings )
-          .then( response => {
+
+        fetch(uriTareaId, settings)
+          .then(response => {
             console.log(response.status);
             consultarTareas()
           })
-          .catch( err => console.log(err))
-       })
+          .catch(err => console.log(err))
+      })
     })
 
   }
@@ -217,11 +217,33 @@ window.addEventListener('load', function () {
   /*                     FUNCIÓN 7 - Eliminar tarea [DELETE]                    */
   /* -------------------------------------------------------------------------- */
   function botonBorrarTarea() {
-   
-    
 
-    
+    const btnEliminar = document.querySelectorAll(".borrar")
 
-  };
+    btnEliminar.forEach(boton => {
+      // Asignar a cada botón un listener para poder capturar el id de la tarea a la cual clickeo
+      boton.addEventListener("click", (event) => {
+        console.log("Eliminar tarea... ");
+        console.log(event.target);
+        console.log(event.target.id);
+        const id = event.target.id
+        const uriTareaId = `${uriTareas}/${id}`
 
-});
+        const settings = {
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            authorization: token
+          },
+        }
+
+        fetch(uriTareaId, settings)
+          .then(response => {
+            console.log(response.status);
+            consultarTareas()
+          })
+          .catch(err => console.log(err))
+      });
+    })
+  }
+})
