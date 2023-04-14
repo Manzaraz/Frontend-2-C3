@@ -5,6 +5,7 @@ if (!localStorage.jwt) {
 }
 /* ------ comienzan las funcionalidades una vez que carga el documento ------ */
 window.addEventListener('load', function () {
+  AOS.init();
 
   /* ---------------- variables globales y llamado a funciones ---------------- */
   const URL = "https://todo-api.ctd.academy/v1"
@@ -24,13 +25,31 @@ window.addEventListener('load', function () {
   /* -------------------------------------------------------------------------- */
 
   btnCerrarSesion.addEventListener('click', function () {
-    const cerrarSesion = confirm("¿Está seguro de que desea cerrar sesión?")
-
-    if (cerrarSesion) {
+    // const cerrarSesion = confirm("¿Está seguro de que desea cerrar sesión?")
+    // if (cerrarSesion) {
+    //   localStorage.clear()
+    //   location.replace("./index.html")
+    // }
+   Swal.fire({
+    title: '¿Desea cerrar sesión?',
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, quiero salir',
+    cancelButtonText: 'No, mejor vuelvo'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        'Cerraste sesión!',
+        'Te esperamos pronto.',
+        'success'
+      )
       localStorage.clear()
       location.replace("./index.html")
     }
-  });
+  })
+});
 
   /* -------------------------------------------------------------------------- */
   /*                 FUNCIÓN 2 - Obtener nombre de usuario [GET]                */
@@ -138,7 +157,11 @@ window.addEventListener('load', function () {
       if (tarea.completed) {
         contador++
         tareasTerminadas.innerHTML += `
-          <li class="tarea">
+          <li class="tarea" 
+            data-aos="fade-right"
+            data-aos-easing="ease-out-cubic"
+            data-aos-duration="1000" 
+          >
             <div class="hecha">
               <i class="fa-regular fa-circle-check"></i>
             </div>
@@ -153,7 +176,9 @@ window.addEventListener('load', function () {
         `
       } else {
         tareasPendientes.innerHTML += `
-       <li class="tarea">
+       <li class="tarea" 
+          data-aos="fade-down"
+        >
             <button class="change" id="${tarea.id}"><i class="fa-regular fa-circle"></i></button>
             <div class="descripcion">
               <p class="nombre">${tarea.description}</p>
